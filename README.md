@@ -1,12 +1,15 @@
 # GoogleSpreadsheet2yml
 
-TODO: Write a gem description
+This is a little gem that allows for easy management of Google
+Spreadsheets translations - it converts each column to corresponding
+language taking the first row for each column as tha name of the 
+translation/locale. (i.e. en.gdoc.yml de.gdoc.yml pl.gdoc.yml)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'google-spreadsheet2yml'
+    gem 'google_spreadsheet2yml'
 
 And then execute:
 
@@ -14,11 +17,16 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install google-spreadsheet2yml
+    $ gem install google_spreadsheet2yml
 
 ## Usage
 
-TODO: Write usage instructions here
+Insert 'google_doc_translations_config.yml' file into 'config' directory 
+of your Rails application - below is a content it should have:  
+
+    google_user_id: user
+    google_password: password
+    google_spreedsheet_to_process: 'xxxxxxxxxxxxxxxx'
 
 ## Contributing
 
