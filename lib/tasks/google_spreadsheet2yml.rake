@@ -47,7 +47,9 @@ namespace :gs2yml do
     languages.keys.each do |lang| 
       hash = Hash.new
       (2..ws.num_rows).each do |row|
-        hash.store([lang, ws[row, 1].strip.rstrip].join('.'), ws[row, languages[lang]].strip.rstrip)
+        unless ws[row, 1].blank? || ws[row, languages[lang]].blank?         
+          hash.store([lang, ws[row, 1].strip.rstrip].join('.'), ws[row, languages[lang]].strip.rstrip)
+        end
       end
 
       File.open("./config/locales/#{lang}.gdocs.yml", 'w') {|f| f.write(GoogleSpreadsheet2yml.create_yaml(hash)) }
