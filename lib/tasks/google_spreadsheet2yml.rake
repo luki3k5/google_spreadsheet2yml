@@ -1,15 +1,9 @@
-desc 'my plugins rake task'
-task :do_something do
-  puts "the rake task did something"
-end
-
 namespace :gs2yml do 
 
   desc "gets translations from google doc and creates YML files"
   task :translate do
     puts "Starting Translation"
 
-    # require "rubygems"
     require "google_spreadsheet"
     require 'yaml'
     require 'google_spreadsheet2yml'
@@ -41,17 +35,18 @@ namespace :gs2yml do
       languages["#{ws[1,c]}"] = c
     end 
 
-    puts "Connecting to Google Docs"
-
     # Create flat HASH from Spreedsheet that will be processed 
     languages.keys.each do |lang| 
       hash = Hash.new
       (2..ws.num_rows).each do |row|
-        unless ws[row, 1].blank? || ws[row, languages[lang]].blank?         
+        if !ws[row, 1].blank? && !ws[row, languages[lang]].blank? && !ws[row, languages[lang]] == "missing"         
           hash.store([lang, ws[row, 1].strip.rstrip].join('.'), ws[row, languages[lang]].strip.rstrip)
+        elsif !ws[row, 1].blank?
+          hash.store([lang, ws[row, 1].strip.rstrip].join('.'), ws[row, languages["en"]].strip.rstrip)
         end
       end
 
+      puts "Writting file to: #{lang}.gdoc.yml"
       File.open("./config/locales/#{lang}.gdocs.yml", 'w') {|f| f.write(GoogleSpreadsheet2yml.create_yaml(hash)) }
     end
   end
