@@ -39,7 +39,7 @@ namespace :gs2yml do
     languages.keys.each do |lang| 
       hash = Hash.new
       (2..ws.num_rows).each do |row|
-        if !ws[row, 1].blank? && !ws[row, languages[lang]].blank? && !ws[row, languages[lang]] == "missing"         
+        if !ws[row, 1].blank? && !ws[row, languages[lang]].blank? && ws[row, languages[lang]] != "missing"         
           hash.store([lang, ws[row, 1].strip.rstrip].join('.'), ws[row, languages[lang]].strip.rstrip)
         elsif !ws[row, 1].blank?
           hash.store([lang, ws[row, 1].strip.rstrip].join('.'), ws[row, languages["en"]].strip.rstrip)
